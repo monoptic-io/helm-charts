@@ -1,0 +1,21 @@
+apiVersion: v1
+entries:
+  monoptic-flink-engine:
+  - apiVersion: v2
+    appVersion: testing
+    created: "2024-02-27T06:00:58.29248494Z"
+    dependencies:
+    - name: flink-kubernetes-operator
+      repository: https://downloads.apache.org/flink/flink-kubernetes-operator-1.7.0/
+      version: 1.7.0
+    - name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.14.2
+    description: Monoptic engine for Apache Flink.
+    digest: c99f8cd13025aa26a5862dc00adb27d1db721596412e585cb7f5c4edd1f01e44
+    name: monoptic-flink-engine
+    type: application
+    urls:
+    - https://github.com/monoptic-io/helm-charts/releases/download/monoptic-flink-engine-0.0.1/monoptic-flink-engine-0.0.1.tgz
+    version: 0.0.1
+generated: "2024-02-27T06:00:58.292493637Z"
