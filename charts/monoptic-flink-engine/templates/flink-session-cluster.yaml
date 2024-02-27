@@ -1,0 +1,21 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: {{ .Values.flinkSessionCluster.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  image: ghcr.io/monoptic-io/monoptic-flink-runtime:{{ default .Chart.AppVersion .Values.imageTagOverride }}
+  flinkVersion: v1_18
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: "2"
+    kubernetes.container.image.pull-secrets: ghcr-login-secret
+  serviceAccount: flink
+  jobManager:
+    resource:
+      memory: "2048m"
+      cpu: 1
+  taskManager:
+    resource:
+      memory: "2048m"
+      cpu: 1
+
