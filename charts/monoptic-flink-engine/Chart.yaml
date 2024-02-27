@@ -1,0 +1,13 @@
+apiVersion: v2
+name: monoptic-flink-engine
+description: Monoptic engine for Apache Flink.
+type: application
+version: 0.0.1
+appVersion: "testing"
+dependencies:
+- name: flink-kubernetes-operator
+  version: "1.7.0"
+  repository: "https://downloads.apache.org/flink/flink-kubernetes-operator-1.7.0/"
+- name: cert-manager
+  version: "v1.14.2"
+  repository: "https://charts.jetstack.io"

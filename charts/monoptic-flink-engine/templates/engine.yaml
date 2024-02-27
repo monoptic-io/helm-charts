@@ -1,0 +1,28 @@
+apiVersion: monoptic.io/v1alpha1
+kind: Engine
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  url: jdbc:flink://{{ .Values.flinkSqlGateway.name }}:8083
+
+
+{{ if .Values.external.hostname }}
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.external.namespace | default "external" }}
+
+---
+
+apiVersion: monoptic.io/v1alpha1
+kind: Engine
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.external.namespace | default "external" }}
+spec:
+  url: jdbc:flink://{{ .Values.external.hostname }}:{{ .Values.external.port | default "8083" }}
+
+{{ end }}
