@@ -18,4 +18,19 @@ entries:
     urls:
     - https://github.com/monoptic-io/helm-charts/releases/download/monoptic-flink-engine-0.0.1/monoptic-flink-engine-0.0.1.tgz
     version: 0.0.1
-generated: "2024-02-27T06:00:58.292493637Z"
+  monoptic-platform:
+  - apiVersion: v2
+    appVersion: testing
+    created: "2024-02-28T06:25:13.923157172Z"
+    description: Monoptic platform
+    digest: d6acbec9487c581ba7122e23ada8b467bc54a2caf581bad25c44860befefa26b
+    maintainers:
+    - email: staff@monoptic.io
+      name: monoptic.io
+      url: https://monoptic.io
+    name: monoptic-platform
+    type: application
+    urls:
+    - https://github.com/monoptic-io/helm-charts/releases/download/monoptic-platform-0.0.1/monoptic-platform-0.0.1.tgz
+    version: 0.0.1
+generated: "2024-02-28T06:25:13.923163545Z"
