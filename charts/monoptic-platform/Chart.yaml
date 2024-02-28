@@ -1,0 +1,10 @@
+apiVersion: v2
+name: monoptic-platform
+description: Monoptic platform
+type: application
+version: 0.0.1
+appVersion: "testing"
+maintainers:
+- name: monoptic.io
+  email: staff@monoptic.io
+  url: https://monoptic.io

@@ -1,0 +1,39 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-metadata-reader
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups: ["monoptic.io"]
+  resources: ["databases", "views", "engines"]
+  verbs: ["get", "watch", "list"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-metadata-writer
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups: ["monoptic.io"]
+  resources: ["databases", "views", "engines"]
+  verbs: ["get", "watch", "list", "create", "update"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.monopticSqlGateway.name }}-rb
+  namespace: {{ .Release.Namespace }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.monopticSqlGateway.name }}
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ .Release.Name }}-metadata-writer
+  apiGroup: rbac.authorization.k8s.io
+
+

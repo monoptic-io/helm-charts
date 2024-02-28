@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-integration-tests
+{{- /* annotations:
+    "helm.sh/hook": test
+*/}}
+spec:
+  imagePullSecrets:
+  - name: {{ .Release.Name }}-ghcr-login-secret
+  containers:
+  - name: integration-tests
+    image: ghcr.io/monoptic-io/monoptic:{{ .Chart.AppVersion }}
+    imagePullPolicy: Always
+    args: ['--gateway', 'http://{{ .Values.monopticSqlGateway.name }}:8765',
+      '--run', '/opt/etc/integration-tests.sql']
+  restartPolicy: Never
