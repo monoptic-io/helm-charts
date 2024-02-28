@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: monoptic-sql-gateway
+  name: {{ .Values.monopticSqlGateway.name }}
+  namespace: {{ .Release.namespace }}
+spec:
+  ports:
+  - name: gateway
+    port: 8765
+    protocol: TCP
+    targetPort: 8765
+  selector:
+    app: monoptic-sql-gateway
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: monoptic-sql-gateway
+  name: {{ .Values.monopticSqlGateway.name }}
+  namespace: {{ .Release.namespace }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: monoptic-sql-gateway
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: monoptic-sql-gateway
+    spec:
+      imagePullSecrets:
+      - name: {{ .Release.Name }}-ghcr-login-secret
+      containers:
+      - name: monoptic-sql-gateway
+        image: ghcr.io/monoptic-io/monoptic-sql-gateway:{{ default .Chart.AppVersion .Values.imageTagOverride }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8765
+          name: gateway
+          protocol: TCP
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      serviceAccount: {{ .Values.monopticSqlGateway.name }}
+      serviceAccountName: {{ .Values.monopticSqlGateway.name }}
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 300
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 300
